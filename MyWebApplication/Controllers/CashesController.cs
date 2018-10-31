@@ -18,12 +18,48 @@ namespace MyWebApplication.Controllers
         {
             _context = context;
         }
-
-        // GET: Cashes
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string sortOrder,string currentFilter, string searchString, int? page)
         {
-            var myDbContext = _context.Receipts.Include(c => c.Branch);
-            return View(await myDbContext.ToListAsync());
+            
+            ViewData["CurrentSort"] = sortOrder;
+            ViewData["NumberSortParm"] = String.IsNullOrEmpty(sortOrder) ? "number_desc" : "";
+            ViewData["DateSortParm"] = sortOrder == "Date" ? "date_desc" : "Date";
+           
+            
+            if (searchString != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+            ViewData["CurrentFilter"] = searchString;
+            var cashes = from s in _context.Receipts.Include(c => c.Branch)
+                         select s;
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                cashes = cashes.Where(s => s.Remarks.Contains(searchString) || s.ClientName.Contains(searchString));
+            }
+            switch (sortOrder)
+            {
+                case "number_desc":
+                    cashes = cashes.OrderByDescending(s => s.ID);
+                    break;
+                case "Date":
+                    cashes = cashes.OrderBy(s => s.ReceiptDate);
+                    break;
+                case "date_desc":
+                    cashes = cashes.OrderByDescending(s => s.ReceiptDate);
+                    break;
+                default:
+                    cashes = cashes.OrderBy(s => s.ID);
+                    break;
+                    
+            }
+            int pageSize = 10;
+            return View(await PaginatedList< Cash>.CreateAsync(cashes.AsNoTracking(), page ?? 1, pageSize));
+           
         }
 
         // GET: Cashes/Details/5
@@ -45,22 +81,6 @@ namespace MyWebApplication.Controllers
 
             return View(cash);
         }
-
-        // GET: Cashes/Create
-        //public IActionResult Create()
-        //{
-        //    ViewData["BranchID"] = new SelectList(_context.Branches, "BranchID", "BranchID");
-        //    return View();
-
-
-        //}
-
-
-
-        // POST: Cashes/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-
         public IActionResult Create()
         {
             PopulateBranchesDropDownList();
@@ -93,7 +113,7 @@ namespace MyWebApplication.Controllers
             {
                 return NotFound();
             }
-            //ViewData["BranchID"] = new SelectList(_context.Branches, "BranchID", "BranchID", cash.BranchID);
+            
             PopulateBranchesDropDownList(cash.BranchID);
             return View(cash);
         }
