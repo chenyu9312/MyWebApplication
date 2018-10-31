@@ -1,0 +1,83 @@
+﻿@model MyWebApplication.Models.Cash
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h2>Edit</h2>
+
+<h4>Cash</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="ID" />
+            <div class="form-group">
+                <label asp-for="ID" class="control-label">Receipt ID</label>
+                <div>@Html.DisplayFor(model => model.ID)</div>
+            </div>
+            @*<div class="form-group">
+            <label asp-for="ReceiptNumber" class="control-label"></label>
+            <input asp-for="ReceiptNumber" class="form-control" />
+            <span asp-validation-for="ReceiptNumber" class="text-danger"></span>
+        </div>*@
+            <div class="form-group">
+                <label asp-for="Amount" class="control-label"></label>
+                <input asp-for="Amount" class="form-control" />
+                <span asp-validation-for="Amount" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ClientName" class="control-label"></label>
+                <input asp-for="ClientName" class="form-control" />
+                <span asp-validation-for="ClientName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Remarks" class="control-label"></label>
+                <input asp-for="Remarks" class="form-control" />
+                <span asp-validation-for="Remarks" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ReceiptDate" class="control-label"></label>
+                <input asp-for="ReceiptDate" class="form-control" />
+                <span asp-validation-for="ReceiptDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Payment" class="control-label"></label>
+                <select asp-for="Payment" class="form-control" asp-items="Html.GetEnumSelectList<Payment>()" class="control-label">
+                    <option selected="selected" value="">-- Select Payment Option --</option>
+                </select>
+
+                @*<label asp-for="Payment" class="control-label"></label>
+            <input asp-for="Payment" class="form-control" />
+            <span asp-validation-for="Payment" class="text-danger"></span>*@
+            </div>
+            <div class="form-group">
+                <label asp-for="CurrencyCode" class="control-label">Currency Code</label>
+                <select asp-for="CurrencyCode" class="form-control" asp-items="Html.GetEnumSelectList<CurrencyCode>()" class="control-label">
+                    <option selected="selected" value="">-- Select Currency Code Option --</option>
+                </select>
+
+                <span asp-validation-for="CurrencyCode" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="BranchID" class="control-label"></label>
+                <select asp-for="BranchID" class="form-control" asp-items="ViewBag.BranchID"></select>
+                <span asp-validation-for="BranchID" class="text-danger"></span>
+            </div>
+
+
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

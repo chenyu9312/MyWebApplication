@@ -1,0 +1,73 @@
+﻿@model MyWebApplication.Models.Cash
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Cash</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ID)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Amount)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Amount)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ClientName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ClientName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Remarks)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Remarks)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ReceiptDate)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ReceiptDate)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Payment)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Payment)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CurrencyCode)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CurrencyCode)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Branch)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Branch.BranchID)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Branch.Address)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Branch.Address)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.ID">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
