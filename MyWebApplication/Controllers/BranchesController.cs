@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MyWebApplication.Data;
 using MyWebApplication.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace MyWebApplication.Controllers
 {
@@ -44,6 +45,7 @@ namespace MyWebApplication.Controllers
         }
 
         // GET: Branches/Create
+        [Authorize(Roles ="Administrator")]
         public IActionResult Create()
         {
             return View();
@@ -66,6 +68,8 @@ namespace MyWebApplication.Controllers
         }
 
         // GET: Branches/Edit/5
+        [Authorize(Roles = "Administrator")]
+
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -117,6 +121,8 @@ namespace MyWebApplication.Controllers
         }
 
         // GET: Branches/Delete/5
+        [Authorize(Roles = "Administrator")]
+
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
